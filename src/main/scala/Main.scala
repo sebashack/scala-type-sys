@@ -3,6 +3,10 @@ import button.subject.observer.ButtonSubjectObserver._
 import add.sequence.{ AddSeq }
 import add.reduce.{ AddReduce }
 import add.high.kind.{ AddHighReduce }
+import sum.types.{ Breed }
+import functor.{ Functor }
+import functor.FunctorO._
+
 
 object Main extends App {
   val buttons = Vector(new ObservableButton("one"), new ObservableButton("two"))
@@ -31,5 +35,14 @@ object Main extends App {
   println(AddHighReduce.sum(Seq(1, 2, 3, 4, 5)))
   println("***************************")
   println(AddHighReduce.sum(Some(34)))
-
+  println("***************************")
+  for (breed <- Breed.values) println(s"${breed.id}\t$breed")
+  println("***************************")
+  println(Functor.SeqF.map(List(1, 2, 3, 4))((n: Int) => n * 10))
+  println(List(1, 2, 3, 4).fmap((n: Int) => n * 10))
+  println("***************************")
+  println(Functor.OptionF.map(Some(10))((n: Int) => n * 10))
+  println(Some(10).fmap((n: Int) => n * 10))
+  println(Functor.OptionF.map(None)((n: Int) => n * 10))
+  println(None.fmap((n: Int) => n * 10))
 }
