@@ -19,6 +19,10 @@ object Functor {
       case Some(v) => Some(f(v))
     }
   }
+
+  // object MapF extends Functor[({ type L[a] = Map[K, a] })#L] {
+  //   def map[V1](mapKV1: Map[K, V1])(f: V1 => V2): Map[K, V2] = Map.empty
+  // }
 }
 
 
