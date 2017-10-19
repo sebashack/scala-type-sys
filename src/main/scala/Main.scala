@@ -45,4 +45,8 @@ object Main extends App {
   println(Some(10).fmap((n: Int) => n * 10))
   println(Functor.OptionF.map(None)((n: Int) => n * 10))
   println(None.fmap((n: Int) => n * 10))
+  println("***************************")
+  println(Functor.MapF.map(Map("A" -> 1, "B" -> 2, "C" -> 3, "D" -> 4))((n: Int) => n * 10))
+  println(Map("A" -> 1, "B" -> 2, "C" -> 3, "D" -> 4).fmap((n: Int) => n * 10))
+
 }

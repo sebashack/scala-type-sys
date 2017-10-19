@@ -20,9 +20,18 @@ object Functor {
     }
   }
 
-  // object MapF extends Functor[({ type L[a] = Map[K, a] })#L] {
-  //   def map[V1](mapKV1: Map[K, V1])(f: V1 => V2): Map[K, V2] = Map.empty
-  // }
+  object MapF {
+    def map[K, V1, V2](mapKV1: Map[K, V1])(f: V1 => V2): Map[K, V2] = {
+      val functor = new Functor[({type L[a] = Map[K, a]})#L] {
+        def map[A, B](mapKV1: Map[K, A])(g: A => B): Map[K, B] = {
+          val l = SeqF.map(mapKV1.toList)({ case (k, v) => (k, g(v)) })
+          l.toMap
+        }
+      }
+
+      functor.map(mapKV1)(f)
+    }
+  }
 }
 
 
@@ -38,5 +47,10 @@ object FunctorO {
 
   implicit class OptFuncO[A](opt: Option[A]) extends FunctorO[A, Option] {
     def fmap[B](f: A => B): Option[B] = Functor.OptionF.map(opt)(f)
+  }
+
+  implicit class MapFuncO[K,V1](mapKV1: Map[K,V1])
+      extends FunctorO[V1, ({type L[a] = Map[K,a]})#L] {
+    def fmap[V2](f: V1 => V2): Map[K,V2] = Functor.MapF.map(mapKV1)(f)
   }
 }
