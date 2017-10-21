@@ -32,6 +32,15 @@ object Functor {
       functor.map(mapKV1)(f)
     }
   }
+
+  object FunctionF {
+    def map[A,A2,B](func: A => A2)(f: A2 => B): A => B = {
+      val functor = new Functor[({type λ[β] = A => β})#λ] {
+        def map[C,D](func: A => C)(f: C => D): A => D = (a: A) => f(func(a))
+      }
+      functor.map(func)(f)
+    }
+  }
 }
 
 
