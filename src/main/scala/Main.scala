@@ -6,6 +6,8 @@ import add.high.kind.{ AddHighReduce }
 import sum.types.{ Breed }
 import functor.{ Functor }
 import functor.FunctorO._
+import applicative.Applicative.OptionAp._
+import applicative.Apply._
 
 
 object Main extends App {
@@ -38,8 +40,10 @@ object Main extends App {
   println("***************************")
   for (breed <- Breed.values) println(s"${breed.id}\t$breed")
   println("***************************")
+  println("Functor Examples")
+  println("***************************")
   println(Functor.SeqF.map(List(1, 2, 3, 4))((n: Int) => n * 10))
-  println(List(1, 2, 3, 4).fmap((n: Int) => n * 10))
+  println(Seq(1, 2, 3, 4).fmap((n: Int) => n * 10))
   println("***************************")
   println(Functor.OptionF.map(Some(10))((n: Int) => n * 10))
   println(Some(10).fmap((n: Int) => n * 10))
@@ -50,5 +54,15 @@ object Main extends App {
   println(Map("A" -> 1, "B" -> 2, "C" -> 3, "D" -> 4).fmap((n: Int) => n * 10))
   println("***************************")
   println(Functor.FunctionF.map((n: Int) => n.toString)((s: String) => s + " is an Int")(123123))
-
+  println("***************************")
+  println("Applicative Examples")
+  println("***************************")
+  val m: Option[Int] = pure(1)
+  val k: Option[Int] = pure(2)
+  def g(n: Int)(m: Int): Int = (n + m) * 50
+  println(m <*> (k <*> pure(g _)))
+  println("***************************")
+  val v: Vector[Int] = Vector(10, 20, 10, 20)
+  val vfs: Vector[Int => Int] = Vector((n: Int) => n * 10, (n: Int) => n + 10)
+  println(v <*> vfs)
 }

@@ -45,8 +45,8 @@ object Functor {
 
 
 // Approach 2: Wrapping object in implicit class which implements Functor
-trait FunctorO[A, +M[_]] {
-  def fmap[B](f: A => B): M[B]
+trait FunctorO[A, +F[_]] {
+  def fmap[B](f: A => B): F[B]
 }
 
 object FunctorO {
