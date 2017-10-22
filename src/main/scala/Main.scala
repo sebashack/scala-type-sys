@@ -8,7 +8,8 @@ import functor.{ Functor }
 import functor.FunctorO._
 import applicative.Applicative.OptionAp._
 import applicative.Apply._
-
+import monad.Monad.SeqM.{ bind }
+import monad.MonadO._
 
 object Main extends App {
   val buttons = Vector(new ObservableButton("one"), new ObservableButton("two"))
@@ -65,4 +66,13 @@ object Main extends App {
   val v: Vector[Int] = Vector(10, 20, 10, 20)
   val vfs: Vector[Int => Int] = Vector((n: Int) => n * 10, (n: Int) => n + 10)
   println(v <*> vfs)
+  println("***************************")
+  println("Monad Examples")
+  println("***************************")
+  val l1: List[Int] = List(1, 0, 1, 0)
+  def lf(l: Int): List[Int] = List(l, l, l)
+  println(bind(l1)(lf))
+
+  val by2: Int => Option[Int] = (n: Int) => Some(2 * n)
+  println(Some(22) >>= by2)
 }

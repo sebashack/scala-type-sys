@@ -4,7 +4,9 @@ import functor._
 
 trait Applicative[F[_]] extends Functor[F] {
   def pure[A](a: A): F[A]
+
   def apply[A, B](f: F[A => B])(fa: F[A]): F[B]
+
   override def map[A, B](fa: F[A])(f: A => B): F[B] = apply(pure(f))(fa)
 }
 
