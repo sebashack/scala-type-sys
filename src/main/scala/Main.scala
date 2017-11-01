@@ -10,6 +10,7 @@ import applicative.Applicative.OptionAp._
 import applicative.Apply._
 import monad.Monad.SeqM.{ bind }
 import monad.MonadO._
+import typeFamilies._
 
 object Main extends App {
   val buttons = Vector(new ObservableButton("one"), new ObservableButton("two"))
@@ -19,10 +20,20 @@ object Main extends App {
   for (i <- 0 to 2) buttons(0).click()
   for (i <- 0 to 2) buttons(1).click()
 
+  println("***************************")
+  val mvF1: Move[Fire] = Move("Fire Blast")
+  val mvF2: Move[Fire] = Move("Fire Canon")
+
+  val mvW1: Move[Water] = Move("Water Bubbles")
+  val mvW2: Move[Water] = Move("Water Beam")
+
+  println(new FirePokemon(Array(mvF1, mvF2)).pickMove(charmander))
+  println(new WaterPokemon(Array(mvW1, mvW2)).pickMove(squirtle))
+  println("***************************")
+
   // val r1 = AddSeq.sumSeq(Option(2)) This won't compile
   // val r2 = AddReduce.sum[Int,Option](None) This won't compile
 
-  println("***************************")
   println(AddSeq.sumSeq(Vector(1, 2, 3, 4, 5)))
   println("***************************")
   println(AddSeq.sumSeq(Seq(1, 2, 3, 4, 5)))
